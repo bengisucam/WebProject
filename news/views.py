@@ -5,4 +5,4 @@ from django.shortcuts import render
 
 
 def list_news(request):
-    return render(request, 'news/news.html')
+    return render(request, 'news/list_news.html')
