@@ -1,5 +1,4 @@
 from django.db import models
-import accounts.models
 from accounts.models import Instructor
 
 # Create your models here.
@@ -10,6 +9,11 @@ class News(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     description = models.TextField(max_length=500, blank=False)
     likes = models.PositiveSmallIntegerField(default=0)
+
+    def __str__(self):
+        return self.title
+
+
 
 
 class NewsInstructorMatch(models.Model):

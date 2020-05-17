@@ -8,5 +8,15 @@
     <h1>
         News listing will be here after login
     </h1>
+    <div class="news">
+        {% for n in news_list %}
+
+            <h2><a href="">{{ n.title }}</a> </h2>
+            <p>{{ n.date }}</p>
+            <p>{{ n.likes }}</p>
+
+        {% endfor %}
+
+    </div>
 </body>
 </html>
