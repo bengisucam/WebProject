@@ -7,13 +7,7 @@
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
     </head>
     <body>
-        <div id="wrapper">
-            <h1>Welcome to EneryShake Sports Center!</h1>
-            <p><a id="link-to-form" href="{% url 'signupForm' %}">Sign Up</a></p>
-            <p><a id="link-to-form" href="{% url 'loginForm' %}">Login</a></p>
-
-        </div>
-        <div class="wrapper">
+        <div class="wrapper" id="wrapper">
             {% block content %}
             {% endblock %}
         </div>
