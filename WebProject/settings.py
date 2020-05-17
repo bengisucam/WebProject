@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # own
     'myapp.apps.MyappConfig',
     'accounts.apps.AccountsConfig',
+    'news.apps.NewsConfig',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +59,7 @@ ROOT_URLCONF = 'WebProject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['WebProject/templates', 'myapp/templates'],
+        'DIRS': ['WebProject/templates', 'myapp/templates', 'accounts/templates', 'news/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
