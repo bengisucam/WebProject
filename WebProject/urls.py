@@ -23,6 +23,6 @@ urlpatterns = [
     path('myapp/', include('myapp.urls')),
     path('accounts/', include('accounts.urls')),
     path('accounts/login/news/', include('news.urls')),
-    path('accounts/signup/', include('accounts.urls'))
+    path('accounts/', include('accounts.urls'))
 
 ]

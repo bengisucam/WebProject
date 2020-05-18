@@ -19,13 +19,27 @@
 
 body{
     font-family: "Gill Sans MT";
-    font-size: 2em;
-    color: #fff;
+    color: darkslateblue;
     text-align: center;
 }
 
 h1{
-    font-size: 4em;
+    font-size: 5em;
+    text-align: center;
+    font-weight: 600;
+    /*font-family: 'Montserrat Alternates', sans-serif;*/
+    font-family: "Gill Sans MT";
+    text-shadow: 4px 4px #ff0000;
+    color: mintcream;
+    width: 70%;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+h3{
+    font-size: 2em;
     text-align: center;
     font-weight: 600;
     /*font-family: 'Montserrat Alternates', sans-serif;*/
@@ -43,7 +57,7 @@ h1{
 
 
 a, a:hover, a:visited{
-    font-size: 0.7em;
+    font-size: 2em;
     font-weight: 500;
     font-family: "Gill Sans MT";
     color: #fff;
@@ -52,4 +66,42 @@ a, a:hover, a:visited{
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     bottom: 30px;
+}
+
+.form{
+    margin-top: 60px;
+    border: 3px solid darkblue;
+    padding: 20px;
+    bottom: 10em;
+    background-color: lavenderblush;
+
+}
+
+
+.form input, .form textarea{
+    display: block;
+    margin: 20px 0 0 0;
+    padding: 5px;
+    text-align: center;
+}
+
+.helptext{
+    color: #bbb;
+    font-size: small;
+    display: block;
+}
+
+.errorlist li{
+    padding: 5px;
+    list-style-type:none;
+    border: 1px solid #ff0000
+
+}
+
+.form input[type="submit"]{
+    font-size: 1.2em;
+    border-radius: 5px;
+    color: mintcream;
+    background: darkslateblue;
+    align-items: center;
 }
