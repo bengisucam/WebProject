@@ -2,8 +2,18 @@
 
 {% block content %}
 
-    <h1>Login</h1>
-    <p>Form to login, redirect into seperate forms for manager, instructor, customer</p>
+    <h3>Login !</h3>
+    <form class="form" action="/accounts/login" method="post">
+
+        <label for="email">Email: </label>
+        <input id="email" type="email" name="email" maxlength="100" placeholder="Write your email address" required>
+        <br>
+        <label for="password">Password: </label>
+        <input id="password" type="password" name="password" maxlength="20" placeholder="Your password"required>
+        <br>
+        <input type="submit" value="Login">
+    </form>
+
 {% endblock %}
 
 
