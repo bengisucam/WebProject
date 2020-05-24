@@ -23,9 +23,9 @@ class User(models.Model):
     last_name = models.CharField(max_length=100, blank=False)
     date_of_birth = forms.DateField(widget=forms.SelectDateWidget(years=YEARS))
     gender = models.CharField(max_length=6, choices=GENDERS)
-    email = models.EmailField()
+    email = models.EmailField(max_length=100)
     password = forms.CharField(max_length=30, widget=forms.PasswordInput)
-    is_active = models.BooleanField(blank=False)
+    is_active = models.BooleanField(max_length=10, blank=False)
     role = models.CharField(max_length=10, choices=ROLES, default=ROLES[1][1])
 
     class Meta:
