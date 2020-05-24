@@ -1,5 +1,4 @@
 from django.db import models
-from accounts.models import Instructor
 
 # Create your models here.
 
@@ -17,5 +16,5 @@ class News(models.Model):
 
 
 class NewsInstructorMatch(models.Model):
-    instructor_id = models.ForeignKey(Instructor, on_delete=models.CASCADE)
+    # instructor_id = models.ForeignKey(Instructor, on_delete=models.CASCADE)
     news_id = models.ForeignKey(News, on_delete=models.CASCADE)

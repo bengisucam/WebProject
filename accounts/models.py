@@ -26,26 +26,9 @@ class User(models.Model):
     email = models.EmailField()
     password = forms.CharField(max_length=30, widget=forms.PasswordInput)
     is_active = models.BooleanField(blank=False)
+    role = models.CharField(max_length=10, choices=ROLES, default=ROLES[1][1])
 
     class Meta:
         abstract = False
         # ordering = ['first_name']
 
-
-# bence bu 3 class gereksiz
-class Manager(User):
-    pass
-
-
-class Instructor(User):
-    pass
-
-
-class Customer(User):
-    pass
-
-
-# user-role relation
-class UserRole(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    role_name = models.CharField(max_length=10, choices=ROLES)
