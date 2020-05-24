@@ -1,4 +1,5 @@
 from django.db import models
+from accounts.models import User
 
 # Create your models here.
 
@@ -8,13 +9,10 @@ class News(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     description = models.TextField(max_length=500, blank=False)
     likes = models.PositiveSmallIntegerField(default=0)
+    # instructor_id = models.ForeignKey(User, on_delete=models.CASCADE)
+
 
     def __str__(self):
         return self.title
 
 
-
-
-class NewsInstructorMatch(models.Model):
-    # instructor_id = models.ForeignKey(Instructor, on_delete=models.CASCADE)
-    news_id = models.ForeignKey(News, on_delete=models.CASCADE)
