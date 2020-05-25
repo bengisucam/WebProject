@@ -3,7 +3,7 @@ from django import forms
 from django.db import models
 
 # Create your models here.
-
+from sportcenter.models import SportCenter
 
 YEARS = [x for x in range(1950, 2021)]
 GENDERS = (
@@ -18,15 +18,15 @@ ROLES = (
 
 
 class User(models.Model):
-    user_id = models.UUIDField(primary_key=True, default=uuid.uuid4(), editable=False)
     first_name = models.CharField(max_length=100, blank=False)
     last_name = models.CharField(max_length=100, blank=False)
-    date_of_birth = forms.DateField(widget=forms.SelectDateWidget(years=YEARS))
+    date_of_birth = models.DateField(blank=True)
     gender = models.CharField(max_length=6, choices=GENDERS)
     email = models.EmailField(max_length=100)
-    password = forms.CharField(max_length=30, widget=forms.PasswordInput)
+    password = models.CharField(max_length=30)
     is_active = models.BooleanField(max_length=10, blank=False)
     role = models.CharField(max_length=10, choices=ROLES, default=ROLES[1][1])
+    sport_center_id = models.ForeignKey(SportCenter, blank=True, on_delete=models.CASCADE)
 
     class Meta:
         abstract = False

@@ -9,7 +9,7 @@ class News(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     description = models.TextField(max_length=500, blank=False)
     likes = models.PositiveSmallIntegerField(default=0)
-    # instructor_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    instructor_id = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
     def __str__(self):
