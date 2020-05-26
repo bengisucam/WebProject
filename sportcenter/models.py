@@ -36,6 +36,6 @@ class Section(models.Model):
     end_time = models.TimeField(auto_now=False)
     service_id = models.ForeignKey(Service, on_delete=models.CASCADE)
     room_id = models.ForeignKey(Room, on_delete=models.CASCADE)
-    #instructor_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    instructor_id = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
 
 
