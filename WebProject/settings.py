@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'myapp.apps.MyappConfig',
     'accounts.apps.AccountsConfig',
     'news.apps.NewsConfig',
-    'sportcenter.apps.SportcenterConfig'
+    'sportcenter.apps.SportcenterConfig',
+    'address.apps.AddressConfig'
 ]
 
 MIDDLEWARE = [
