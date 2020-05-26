@@ -1,9 +1,10 @@
 from django.db import models
 
-
 # Create your models here.
 from address.models import Address
-#from accounts.models import User
+
+
+# from accounts.models import User
 
 
 class SportCenter(models.Model):
@@ -39,3 +40,17 @@ class Section(models.Model):
     instructor_id = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
 
 
+class CustomerPackage(models.Model):
+    customer_id = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
+    package_id = models.ForeignKey(Package, on_delete=models.CASCADE)
+    begin_date = models.DateTimeField(auto_now_add=True, blank=True)
+
+
+class PackageService(models.Model):
+    package_id = models.ForeignKey(Package, on_delete=models.CASCADE)
+    service_id = models.ForeignKey(Service, on_delete=models.CASCADE)
+
+
+class InstructorService(models.Model):
+    instructor_id = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
+    service_id = models.ForeignKey(Service, on_delete=models.CASCADE)
