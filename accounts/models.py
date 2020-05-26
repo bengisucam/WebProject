@@ -1,9 +1,7 @@
-import uuid
-from django import forms
-from django.db import models
-
-# Create your models here.
+from address.models import Address
 from sportcenter.models import SportCenter
+from django.db import models
+# Create your models here.
 
 YEARS = [x for x in range(1950, 2021)]
 GENDERS = (
@@ -27,8 +25,7 @@ class User(models.Model):
     is_active = models.BooleanField(max_length=10, blank=False)
     role = models.CharField(max_length=10, choices=ROLES, default=ROLES[1][1])
     sport_center_id = models.ForeignKey(SportCenter, blank=True, on_delete=models.CASCADE)
+    address_id = models.ForeignKey(Address, blank=True, on_delete=models.CASCADE)
 
-    class Meta:
-        abstract = False
-        # ordering = ['first_name']
+
 
