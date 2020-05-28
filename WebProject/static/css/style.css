@@ -89,8 +89,9 @@ a, a:hover, a:visited{
 }
 
 .form select{
-    margin: 10px;
-    display: inline-block;
+    margin: 15px;
+    display: block;
+    width: 100px;
     align-self: center;
 }
 
@@ -100,4 +101,5 @@ a, a:hover, a:visited{
     color: mintcream;
     background: darkslateblue;
     text-align: center;
+    width: 100px;
 }
