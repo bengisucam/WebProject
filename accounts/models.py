@@ -5,13 +5,13 @@ from django.db import models
 
 YEARS = [x for x in range(1950, 2021)]
 GENDERS = (
-    ('FEMALE', 'female'),
-    ('MALE', 'male')
+    ('FEMALE', 'Female'),
+    ('MALE', 'Male')
 )
 ROLES = (
-    ('MANAGER', 'manager'),
-    ('INSTRUCTOR', 'instructor'),
-    ('CUSTOMER', 'customer')
+    ('MANAGER', 'Manager'),
+    ('INSTRUCTOR', 'Instructor'),
+    ('CUSTOMER', 'Customer')
 )
 
 
