@@ -1,23 +1,57 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>News</title>
+    <link rel="stylesheet" href="{% static 'assets/css/argon.css' %}">
+
 </head>
 <body>
     <h1>
         News listing will be here after login
     </h1>
-    <div class="news">
-        {% for n in news %}
+    <table class="table">
+    <thead>
+        <tr>
 
-            <h2><a href="">{{ n.title }}</a> </h2>
-            <p>{{ n.date }}</p>
-            <p>{{ n.likes }}</p>
+            <th style="font-size: 15px;color: #9d03ad">Title</th>
+            <th style="font-size: 15px;color: #9d03ad">Description</th>
+            <th style="font-size: 15px;color: #9d03ad">Date</th>
+            <th style="font-size: 15px;color: #9d03ad">Likes</th>
+            <th style="font-size: 15px;color: #9d03ad">Action</th>
 
+
+        </tr>
+    </thead>
+    <tbody>
+        <div class="news">
+            {% for n in news %}
+                <tr>
+                    <td >{{ n.title }}</td>
+                    <td>{{ n.description }}</td>
+                    <td>{{ n.date }}</td>
+                    <td>{{ n.likes }}</td>
+
+            <td class="td-actions ">
+              <button type="button" rel="tooltip" class="btn btn-info btn-icon btn-sm " data-original-title="" title="">
+                <i class="ni ni-circle-08 pt-1"></i>
+              </button>
+              <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm " data-original-title="" title="">
+                <i class="ni ni-settings-gear-65 pt-1"></i>
+              </button>
+              <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm " data-original-title="" title="">
+                <i class="ni ni-fat-remove pt-1"></i>
+                </button>
+            </td>
+        </tr>
         {% endfor %}
 
-    </div>
+         </div>
+
+
+    </tbody>
+</table>
 </body>
 </html>
 
