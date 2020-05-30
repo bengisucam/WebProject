@@ -28,9 +28,13 @@ class SignupForm(ModelForm):
 
 
 
-class LoginForm(AuthenticationForm):
+class LoginForm(ModelForm):
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
+    class Meta:
+        model = User
+        # fields = ["first_name", "last_name", "date_of_birth", "email", "password", "gender", "role"]
+        exclude = ('role', 'sport_center_id', 'address_id', 'first_name', 'last_name', 'date_of_birth', 'gender')
 
 
 

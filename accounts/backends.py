@@ -5,7 +5,7 @@ from django.contrib.auth.backends import ModelBackend
 
 from .models import User
 
-class EmailBackend(object):
+class EmailBackend(User):
 
     def authenticate(self, username=None, password=None, **kwargs):
         print("in customer authenticate")
@@ -25,8 +25,8 @@ class EmailBackend(object):
 
 
 
-    # def get_user(self, user_id):
-    #     try:
-    #         return User.objects.get(pk=user_id)
-    #     except User.DoesNotExist:
-    #         return None
+    def get_user(self, user_id):
+        try:
+            return User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            return None

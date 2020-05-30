@@ -15,6 +15,10 @@
         <input id="password" type="password" name="password" maxlength="20" placeholder="Your password"required>
         <br>
         <input type="submit" value="Login">
+
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
     </form>
 
 {% endblock %}

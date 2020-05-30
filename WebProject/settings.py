@@ -114,6 +114,8 @@ AUTHENTICATION_BACKENDS = ('accounts.backends.EmailBackend',
                            'django.contrib.auth.backends.ModelBackend')
 
 
+# AUTH_USER_MODEL = 'accounts.User'
+
 
 
 # Internationalization
