@@ -30,12 +30,10 @@ def create_news(request, user_id):
 
 
 def delete_new(request, user_id, news_id):
-    active_user = User.objects.get(pk=user_id)
     deleted_news = News.objects.get(pk=news_id)
     deleted_news.delete()
-    #news_obj = News.objects.select_related('instructor_id').order_by('-date')
-    #return render(request, 'news/list_news.html', {'active_user': active_user, 'news': news_obj})
     return list_news(request, user_id)
+
 
 def details_new(request, user_id, news_id):
     news = News.objects.get(pk=news_id)
