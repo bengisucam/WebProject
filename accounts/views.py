@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
 from . import forms
+from accounts.models import User
 
 
 # Create your views here.
@@ -16,7 +17,7 @@ def login(request):
     return render(request, 'accounts/login.html', {'loginForm': loginForm})
 
 
-def home(request):
-    return render(request, 'accounts/base_login.html')
-
-
+def home(request, user_id):
+    user_id = 3
+    active_user = User.objects.get(pk=3)
+    return render(request, 'accounts/base_login.html', {'active_user': active_user})

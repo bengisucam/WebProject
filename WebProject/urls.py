@@ -22,7 +22,8 @@ urlpatterns = [
     path('', views.homepage),
     path('myapp/', include('myapp.urls')),
     path('accounts/', include('accounts.urls')),
+    path('accounts/login/', include('accounts.urls')),
     path('accounts/login/', include('news.urls')),
-    path('accounts/login/', include('sportcenter.urls'))
+    path('accounts/login/', include('sportcenter.urls')),
 
 ]
