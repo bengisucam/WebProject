@@ -61,7 +61,7 @@ ROOT_URLCONF = 'WebProject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['WebProject/templates', 'myapp/templates', 'accounts/templates', 'news/templates'],
+        'DIRS': ['WebProject/templates', 'myapp/templates', 'accounts/templates', 'news/templates', 'sportcenter/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -109,6 +109,11 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTHENTICATION_BACKENDS = ('accounts.backends.EmailBackend',
+                           'django.contrib.auth.backends.ModelBackend')
+
+
 
 
 # Internationalization

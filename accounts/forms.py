@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 from .models import User
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 
 
 YEARS = [x for x in range(1950, 2021)]
@@ -27,17 +28,11 @@ class SignupForm(ModelForm):
 
 
 
-class LoginForm(forms.Form):
-    firstName = forms.CharField(label='First Name', max_length=100)
-    lastName = forms.CharField(label='Last Name', max_length=100)
+class LoginForm(AuthenticationForm):
     email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput)
 
 
-# class signup(forms.Form):
-#     firstName = forms.CharField(label='First Name',  max_length=100)
-#     lastName = forms.CharField(label='Last Name',  max_length=100)
-#     date_of_birth = forms.DateField(label='Birth Day')
-#     gender = forms.CharField(max_length=6)
-#     email = forms.EmailField(max_length=100, label='Email')
-#     password = forms.CharField(max_length=30)
-#     role = forms.CharField(max_length=10)
+
+
+

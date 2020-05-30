@@ -5,13 +5,13 @@ from django.db import models
 
 YEARS = [x for x in range(1950, 2021)]
 GENDERS = (
-    ('FEMALE', 'female'),
-    ('MALE', 'male')
+    ('FEMALE', 'Female'),
+    ('MALE', 'Male')
 )
 ROLES = (
-    ('MANAGER', 'manager'),
-    ('INSTRUCTOR', 'instructor'),
-    ('CUSTOMER', 'customer')
+    ('MANAGER', 'Manager'),
+    ('INSTRUCTOR', 'Instructor'),
+    ('CUSTOMER', 'Customer')
 )
 
 
@@ -22,9 +22,9 @@ class User(models.Model):
     gender = models.CharField(max_length=6, choices=GENDERS)
     email = models.EmailField(max_length=100)
     password = models.CharField(max_length=30)
-    role = models.CharField(max_length=10, choices=ROLES, default=ROLES[1][1])
-    sport_center_id = models.ForeignKey(SportCenter, blank=True, on_delete=models.CASCADE)
-    address_id = models.ForeignKey(Address, blank=True, on_delete=models.CASCADE)
+    role = models.CharField(max_length=10, choices=ROLES, default=ROLES[2][1])
+    sport_center_id = models.ForeignKey(SportCenter, blank=True, on_delete=models.CASCADE, null=True)
+    address_id = models.ForeignKey(Address, blank=True, on_delete=models.CASCADE, null=True)
 
 
 
