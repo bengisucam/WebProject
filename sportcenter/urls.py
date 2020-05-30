@@ -4,5 +4,5 @@ from . import views
 # seperate each app url individual files, dont overwhelm the WebProject/urls.py !
 
 urlpatterns = [
-    path('list/', views.sport_center_list),
+    path('sportcenter/', views.sport_center_list)
 ]
