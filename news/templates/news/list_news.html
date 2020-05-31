@@ -1,6 +1,7 @@
 {% extends 'accounts/base_login.html' %}
 {% block container %}
     <body>
+    {% if active_user.role.lower == 'instructor' %}
     <form action="{% url 'add_news' user_id=active_user.id %}"
                                   method="post"> {% csrf_token %}
 
@@ -8,7 +9,7 @@
                 style="margin-top: 10px">
             ADD NEW
         </button>
-
+    {% endif %}
 
     </form>
 
@@ -44,6 +45,7 @@
                                 </button>
 
                             </form>
+                            {% if active_user.role.lower == 'instructor' %}
                             <form> {% csrf_token %}
                                 <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm "
                                         data-original-title="" title="">
@@ -58,6 +60,7 @@
                                 </button>
 
                             </form>
+                            {% endif %}
                         </div>
                     </td>
                 </tr>

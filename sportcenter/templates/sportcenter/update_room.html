@@ -1,0 +1,27 @@
+{% extends 'accounts/base_login.html' %}
+
+{% block container %}
+    <div style="align-items: center" class="card-body">
+        <form action="{% url 'update_room_action' user_id=active_user.id room_id=update_room.id %}" method="post"> {% csrf_token %}
+            <div class="pl-lg-4">
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label class="form-control-label" for="room_name">Room Name</label>
+                        <input type="text" id="room_name" name="room_name" class="form-control" value={{ update_room.room_name}}>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label class="form-control-label" for="room_capacity">Room Capacity</label>
+                        <input type="text" id="room_capacity" name="room_capacity" class="form-control" value={{ update_room.room_capacity}}>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Update Room</button>
+            </div>
+        </form>
+    </div>
+{% endblock container %}
