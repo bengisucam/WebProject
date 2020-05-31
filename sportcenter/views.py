@@ -48,3 +48,53 @@ def update_room_action(request, user_id, room_id):
 
 
 ''' INSTRUCTOR '''
+
+
+def list_ins(request, user_id):
+    active_user = User.objects.get(pk=user_id)
+    ins = User.objects.all().filter(sport_center_id_id=active_user.sport_center_id_id, role='Instructor')
+    return render(request, 'sportcenter/list_ins.html', {'ins': ins, 'active_user': active_user})
+
+
+def add_ins(request, user_id):
+    active_user = User.objects.get(pk=user_id)
+    return render(request, 'sportcenter/add_ins.html', {'active_user': active_user})
+
+
+def create_ins(request, user_id):
+    active_user = User.objects.get(pk=user_id)
+    ins_first_name = request.POST.get("ins_first_name")
+    ins_last_name = request.POST.get("ins_first_name")
+    ins_date = request.POST.get("ins_date")
+    ins_gender = request.POST.get("ins_gender")
+    ins_email = request.POST.get("ins_email")
+    ins_password = request.POST.get("ins_password")
+    new_ins = User(first_name=ins_first_name, last_name=ins_last_name, date_of_birth=ins_date, gender=ins_gender,
+                   email=ins_email, password=ins_password, role='Instructor',
+                   sport_center_id_id=active_user.sport_center_id_id)
+    new_ins.save()
+    return list_ins(request, user_id)
+
+
+def delete_ins(request, user_id, ins_id):
+    deleted_ins = User.objects.get(pk=ins_id)
+    deleted_ins.delete()
+    return list_ins(request, user_id)
+
+
+def update_ins(request, user_id, ins_id):
+    updated_ins = User.objects.get(pk=ins_id)
+    active_user = User.objects.get(pk=user_id)
+    return render(request, 'sportcenter/update_ins.html', {'active_user': active_user, 'update_ins': updated_ins})
+
+
+def update_ins_action(request, user_id, ins_id):
+    updated_ins = User.objects.get(pk=ins_id)
+    updated_ins.first_name = request.POST.get("ins_first_name")
+    updated_ins.last_name = request.POST.get("ins_last_name")
+    #updated_ins.date_of_birth = request.POST.get("ins_date")
+    #updated_ins.gender = request.POST.get("ins_gender")
+    updated_ins.email = request.POST.get("ins_email")
+    updated_ins.password = request.POST.get("ins_password")
+    updated_ins.save()
+    return list_ins(request, user_id)
