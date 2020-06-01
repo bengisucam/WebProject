@@ -1,7 +1,7 @@
 #wrapper{
     /*background-color: #0f121f;*/
     background-image: linear-gradient(to bottom left, rgba(0, 3, 216, 0.32), rgba(106, 13, 32, 0.62)),
-        url('/WebProject/static/img/gym.jpg');
+        url('/static/img/gym.jpg');
     background-size: cover;
     opacity: 100%;
     /*background: linear-gradient(to bottom left, rgb(97, 29, 155), rgb(20, 0, 145));*/
@@ -68,6 +68,13 @@ a, a:hover, a:visited{
     bottom: 30px;
 }
 
+p {
+    font-size: 1.5em;
+    font-weight: 500;
+    font-family: "Gill Sans MT";
+    color: #fff;
+}
+
 .form{
     border: 3px solid darkblue;
     padding: 20px 50px;
@@ -89,8 +96,9 @@ a, a:hover, a:visited{
 }
 
 .form select{
-    margin: 10px;
-    display: inline-block;
+    margin: 15px;
+    display: block;
+    width: 100px;
     align-self: center;
 }
 
@@ -100,4 +108,5 @@ a, a:hover, a:visited{
     color: mintcream;
     background: darkslateblue;
     text-align: center;
+    width: 100px;
 }

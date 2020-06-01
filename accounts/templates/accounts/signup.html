@@ -4,42 +4,13 @@
 
     <h3>Sign Up !</h3>
 
-    <form class="form" action="/accounts/signup" method="post">
-
-        <br>
-        <label for="firstname">First Name: </label>
-        <input id="firstname" type="text" name="firstname" maxlength="100" placeholder="Name"required>
-
-        <br>
-        <label for="lastname">Last Name: </label>
-        <input id="lastname" type="text" name="lastname" maxlength="100" placeholder="Surname"required>
-
-        <br>
-        <label for="email">Email: </label>
-        <input id="email" type="email" name="email" maxlength="100" placeholder="Write your email address" required>
-
-        <br>
-        <label for="password">Password: </label>
-        <input id="password" type="password" name="password" maxlength="20" placeholder="Your password"required>
-        <br>
-
-        <label for="birthday">Birthday:</label>
-        <input type="date" id="birthday" name="birthday">
-
-        <label for="gender">Gender: </label>
-        <SELECT id="gender">
-        <OPTION Value="None">None</OPTION>
-        <OPTION Value="Female">Female</OPTION>
-        <OPTION Value="Male">Male</OPTION>
-        </SELECT>
-
+    <form class="form" action="/accounts/signup/" method="post">
+        {% csrf_token %}
+        {{ signupForm }}
 
         <br>
         <label for="submit"></label>
         <input type="submit" id="submit" value="Submit">
-
-
-
 
     </form>
 

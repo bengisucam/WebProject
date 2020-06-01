@@ -3,7 +3,9 @@
 {% block content %}
 
     <h3>Login !</h3>
-    <form class="form" action="/accounts/login" method="post">
+
+    <form class="form" action="/accounts/login/" method="post">
+        {% csrf_token %}
 
         <label for="email">Email: </label>
         <input id="email" type="email" name="email" maxlength="100" placeholder="Write your email address" required>
@@ -12,8 +14,13 @@
         <input id="password" type="password" name="password" maxlength="20" placeholder="Your password"required>
         <br>
         <input type="submit" value="Login">
+
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
     </form>
 
 {% endblock %}
+
 
 
