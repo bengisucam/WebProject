@@ -26,5 +26,6 @@ class User(models.Model):
     sport_center_id = models.ForeignKey(SportCenter, blank=True, on_delete=models.CASCADE, null=True)
     address_id = models.ForeignKey(Address, blank=True, on_delete=models.CASCADE, null=True)
 
-
+    services = models.ManyToManyField('sportcenter.Service', through='sportcenter.InstructorService')
+    packages = models.ManyToManyField('sportcenter.Package', through='sportcenter.CustomerPackage')
 
