@@ -52,12 +52,14 @@
                             <span class="nav-link-text">My Members</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="profile.html">
-                            <i class="ni ni-single-02 text-yellow"></i>
-                            <span class="nav-link-text">Package</span>
-                        </a>
-                    </li>
+                    {% if active_user.role == 'Manager' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'list_pack' user_id=active_user.id %}">
+                                <i class="ni ni-single-02 text-yellow"></i>
+                                <span class="nav-link-text">My Package</span>
+                            </a>
+                        </li>
+                    {% endif %}
                     {% if active_user.role == 'Manager' %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'list_ins' user_id=active_user.id %}">

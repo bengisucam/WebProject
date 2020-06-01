@@ -1,0 +1,68 @@
+{% extends 'accounts/base_login.html' %}
+
+{% block container %}
+    <body>
+    <form action="{% url 'add_pack' user_id=active_user.id %}"
+          method="post"> {% csrf_token %}
+
+        <button type="submit" class="btn btn-primary float-right"
+                style="margin-top: 10px">
+            ADD PACKAGE
+        </button>
+
+    </form>
+
+    <table class="table">
+        <thead>
+        <tr>
+
+            <th style="font-size: 15px;color: #9d03ad">Package Name</th>
+            <th style="font-size: 15px;color: #9d03ad">Duration (days)</th>
+            <th style="font-size: 15px;color: #9d03ad">Price</th>
+            <th style="font-size: 15px;color: #9d03ad">Services</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <div class="pack">
+            {% for p in pack %}
+                <tr>
+                    <td>{{ p.package_name }}</td>
+                    <td>{{ p.duration }}</td>
+                    <td>{{ p.price }}</td>
+                    <td>
+                    {% for ps in pack_service %}
+                        {% if p.id == ps.package_id_id %}
+                            {{ ps.service_id.service_name }}
+                        {% endif %}
+                    {% endfor %}
+                    </td>
+                    <td class="td-actions ">
+                        <div class="row">
+
+                            <form action="{% url 'update_pack' user_id=active_user.id pack_id=p.id %}"> {% csrf_token %}
+                                <button type="submit" rel="tooltip" class="btn btn-success btn-icon btn-sm "
+                                        data-original-title="" title="">
+                                    <i class="ni ni-settings-gear-65 pt-1"></i>
+                                </button>
+                            </form>
+                            <form action="{% url 'delete_pack' user_id=active_user.id pack_id=p.id %}" method="post"> {% csrf_token %}
+
+                                <button type="submit" rel="tooltip" class="btn btn-danger btn-icon btn-sm "
+                                        data-original-title="" title="">
+                                    <i class="ni ni-fat-remove pt-1"></i>
+                                </button>
+
+                            </form>
+
+
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </div>
+        </tbody>
+    </table>
+    </body>
+{% endblock container %}

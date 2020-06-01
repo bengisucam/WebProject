@@ -15,5 +15,11 @@ urlpatterns = [
     path('<int:user_id>/ins/create/', views.create_ins, name='create_ins'),
     path('<int:user_id>/ins/delete/<int:ins_id>/', views.delete_ins, name='delete_ins'),
     path('<int:user_id>/ins/update/<int:ins_id>/', views.update_ins, name='update_ins'),
-    path('<int:user_id>/ins/update/action/<int:ins_id>/', views.update_ins_action, name='update_ins_action')
+    path('<int:user_id>/ins/update/action/<int:ins_id>/', views.update_ins_action, name='update_ins_action'),
+    path('<int:user_id>/pack/', views.list_pack, name='list_pack'),
+    path('<int:user_id>/pack/add/', views.add_pack, name='add_pack'),
+    path('<int:user_id>/pack/create/', views.create_pack, name='create_pack'),
+    path('<int:user_id>/pack/delete/<int:pack_id>/', views.delete_pack, name='delete_pack'),
+    path('<int:user_id>/pack/update/<int:pack_id>/', views.update_pack, name='update_pack'),
+    path('<int:user_id>/pack/update/action/<int:pack_id>/', views.update_pack_action, name='update_pack_action')
 ]

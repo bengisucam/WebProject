@@ -1,6 +1,9 @@
+import sys
+
+from django.db.models import Count
 from django.shortcuts import render
 from accounts.models import User
-from sportcenter.models import Room
+from sportcenter.models import Room, Package, Service, PackageService
 
 # Create your views here.
 
@@ -92,9 +95,73 @@ def update_ins_action(request, user_id, ins_id):
     updated_ins = User.objects.get(pk=ins_id)
     updated_ins.first_name = request.POST.get("ins_first_name")
     updated_ins.last_name = request.POST.get("ins_last_name")
-    #updated_ins.date_of_birth = request.POST.get("ins_date")
-    #updated_ins.gender = request.POST.get("ins_gender")
+    # updated_ins.date_of_birth = request.POST.get("ins_date")
+    # updated_ins.gender = request.POST.get("ins_gender")
     updated_ins.email = request.POST.get("ins_email")
     updated_ins.password = request.POST.get("ins_password")
     updated_ins.save()
+    return list_ins(request, user_id)
+
+
+''' PACKAGE '''
+
+
+def list_pack(request, user_id):
+    active_user = User.objects.get(pk=user_id)
+    pack = Package.objects.filter(sport_center_id_id=active_user.sport_center_id_id)
+    pack_service = PackageService.objects.select_related('service_id')
+    return render(request, 'sportcenter/list_pack.html',
+                  {'pack': pack, 'active_user': active_user, 'pack_service': pack_service})
+
+
+def add_pack(request, user_id):
+    active_user = User.objects.get(pk=user_id)
+    services = Service.objects.all()
+    return render(request, 'sportcenter/add_pack.html', {'active_user': active_user, 'services': services})
+
+
+def create_pack(request, user_id):
+    active_user = User.objects.get(pk=user_id)
+    pack_name = request.POST.get("pack_name")
+    pack_duration = request.POST.get("pack_duration")
+    pack_price = request.POST.get("pack_price")
+    new_package = Package(package_name=pack_name, duration=pack_duration, price=pack_price,
+                          sport_center_id_id=active_user.sport_center_id_id)
+    new_package.save()
+
+    for i in range(1, len(Service.objects.all()) + 1):
+        if request.POST.get("check" + str(i)):
+            new_package_service = PackageService(package_id_id=new_package.id, service_id_id=i)
+            new_package_service.save()
+
+    return list_pack(request, user_id)
+
+
+def delete_pack(request, user_id, pack_id):
+    deleted_pack = Package.objects.get(pk=pack_id)
+    deleted_pack.delete()
+    return list_pack(request, user_id)
+
+
+def update_pack(request, user_id, pack_id):
+    updated_pack = Package.objects.get(pk=pack_id)
+    active_user = User.objects.get(pk=user_id)
+    services = Service.objects.all()
+    select = PackageService.objects.filter(package_id_id=pack_id).select_related('service_id_id')
+
+    return render(request, 'sportcenter/update_pack.html',
+                  {'active_user': active_user, 'update_pack': updated_pack, 'services': services, 'select': select})
+
+
+def update_pack_action(request, user_id, pack_id):
+    updated_pack = Package.objects.get(pk=pack_id)
+    updated_pack.package_name = request.POST.get("pack_name")
+    updated_pack.duration = request.POST.get("pack_duration")
+    updated_pack.price = request.POST.get("pack_price")
+    for i in range(1, len(Service.objects.all()) + 1):
+        if request.POST.get("check" + str(i)):
+            new_package_service = PackageService.objects.filter(package_id_id=pack_id)
+            new_package_service.save()
+
+    updated_pack.save()
     return list_ins(request, user_id)
