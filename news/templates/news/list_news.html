@@ -1,24 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>News</title>
-</head>
-<body>
-    <h1>
-        News listing will be here after login
-    </h1>
-    <div class="news">
-        {% for n in news %}
+{% extends 'accounts/base_login.html' %}
+{% block container %}
+    <body>
+    {% if active_user.role.lower == 'instructor' %}
+    <form action="{% url 'add_news' user_id=active_user.id %}"
+                                  method="post"> {% csrf_token %}
 
-            <h2><a href="">{{ n.title }}</a> </h2>
-            <p>{{ n.date }}</p>
-            <p>{{ n.likes }}</p>
+        <button type="submit" class="btn btn-primary float-right"
+                style="margin-top: 10px">
+            ADD NEW
+        </button>
+    {% endif %}
 
-        {% endfor %}
+    </form>
 
-    </div>
-</body>
-</html>
+    <table class="table">
+        <thead>
+        <tr>
+
+            <th style="font-size: 15px;color: #9d03ad">Title</th>
+            <th style="font-size: 15px;color: #9d03ad">Date</th>
+            <th style="font-size: 15px;color: #9d03ad">Likes</th>
+            <th style="font-size: 15px;color: #9d03ad">Instructor</th>
 
 
+        </tr>
+        </thead>
+        <tbody>
+        <div class="news">
+            {% for n in news %}
+                <tr>
+                    <td>{{ n.title }}</td>
+                    <td>{{ n.date }}</td>
+                    <td>{{ n.likes }}</td>
+                    <td>{{ n.instructor_id.first_name }} {{ n.instructor_id.last_name }}</td>
+
+                    <td class="td-actions ">
+                        <div class="row">
+                            <!-- Large modal -->
+                            <form action="{% url 'details_news' user_id=active_user.id  news_id=n.id %}"
+                                  method="post"> {% csrf_token %}
+                                <button type="submit" rel="tooltip" class="btn btn-default btn-icon btn-sm "
+                                        data-original-title="" title="">
+                                    <i class="ni ni-circle-08 pt-1"></i>
+                                </button>
+
+                            </form>
+                            {% if active_user.role.lower == 'instructor' %}
+                            <form> {% csrf_token %}
+                                <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm "
+                                        data-original-title="" title="">
+                                    <i class="ni ni-settings-gear-65 pt-1"></i>
+                                </button>
+                            </form>
+                            <form action="{% url 'delete_news' user_id=active_user.id news_id=n.id %}" method="post"> {% csrf_token %}
+
+                                <button type="submit" rel="tooltip" class="btn btn-danger btn-icon btn-sm "
+                                        data-original-title="" title="">
+                                    <i class="ni ni-fat-remove pt-1"></i>
+                                </button>
+
+                            </form>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </div>
+        </tbody>
+    </table>
+    </body>
+{% endblock container %}
