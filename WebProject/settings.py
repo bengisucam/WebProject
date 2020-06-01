@@ -137,7 +137,7 @@ USE_TZ = True
 
 STATICFILES_DIRS = [
     # os.path.join(BASE_DIR, 'static'),
-    'WebProject/static',  # Here you tell django to look for a folder
+    'WebProject/../accounts/templates/static',  # Here you tell django to look for a folder
 ]
 
 STATIC_URL = '/static/'
