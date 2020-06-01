@@ -6,7 +6,6 @@
 
     <form class="form" action="/accounts/login/" method="post">
         {% csrf_token %}
-{#        {{ loginForm }}#}
 
         <label for="email">Email: </label>
         <input id="email" type="email" name="email" maxlength="100" placeholder="Write your email address" required>

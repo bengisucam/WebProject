@@ -22,7 +22,6 @@ urlpatterns = [
     path('', views.homepage),
     path('myapp/', include('myapp.urls')),
     path('accounts/', include('accounts.urls')),
-    path('accounts/login/<int:pk>/news/', include('news.urls'), name='newsListing'),
     path('accounts/', include('accounts.urls')),
     path('sportcenter/', include('sportcenter.urls'))
 
