@@ -1,7 +1,7 @@
 #wrapper{
     /*background-color: #0f121f;*/
     background-image: linear-gradient(to bottom left, rgba(0, 3, 216, 0.32), rgba(106, 13, 32, 0.62)),
-        url('/WebProject/static/img/gym.jpg');
+        url('/static/img/gym.jpg');
     background-size: cover;
     opacity: 100%;
     /*background: linear-gradient(to bottom left, rgb(97, 29, 155), rgb(20, 0, 145));*/
