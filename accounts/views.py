@@ -1,30 +1,30 @@
-from django.shortcuts import render
-from django.contrib.auth.forms import UserCreationForm
+
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-
-from . import forms
-from accounts.models import User
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from .forms import SignupForm
 from .models import User
 
 
-# Create your views here.
-
 
 def signupPage(request):
     if request.method == 'POST':
         signupForm = SignupForm(request.POST)
         if signupForm.is_valid():
-            print('saving user')
-            signupForm.save()
+            email = signupForm.cleaned_data.get('email')
+            user_list = User.objects.all()
+            if not user_list.filter(email=email).exists():
+                signupForm.save()
+            else:
+                messages.error(request, 'User already exists!')
+                return redirect('signupForm')
             # log the user in
             return redirect('loginForm')
     else:
         signupForm = SignupForm()
     return render(request, 'accounts/signup.html', {'signupForm': signupForm})
+
 
 
 def loginPage(request):

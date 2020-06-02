@@ -12,6 +12,10 @@
         <label for="submit"></label>
         <input type="submit" id="submit" value="Submit">
 
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+
     </form>
 
 {% endblock %}
