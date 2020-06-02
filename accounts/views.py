@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+
 from . import forms
 from accounts.models import User
 from django.contrib import messages
@@ -32,10 +35,12 @@ def loginPage(request):
             user = User.objects.get(email=email)
             if user.password == password:
                 pk = user.pk
-                return redirect('news', pk=pk)
+                # return redirect('homeForm', pk=pk)
+                return HttpResponseRedirect(reverse('homeForm', args=(pk,)))
             else:
                 messages.error(request, 'Password is not correct!')
-        except:
+        except Exception as e:
+            print(e)
             messages.error(request, 'Email does not exists!')
             return render(request, 'accounts/login.html')
     context = {}
@@ -45,6 +50,6 @@ def loginPage(request):
 
 
 def home(request, user_id):
-    user_id = 3
-    active_user = User.objects.get(pk=3)
+    # user_id = 3
+    active_user = User.objects.get(pk=user_id)
     return render(request, 'accounts/base_login.html', {'active_user': active_user})
