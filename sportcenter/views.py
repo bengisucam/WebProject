@@ -1,9 +1,9 @@
 import sys
 
 from django.db.models import Count
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from accounts.models import User
-from sportcenter.models import Room, Package, Service, PackageService
+from sportcenter.models import Room, Package, Service, PackageService, CustomerPackage
 
 # Create your views here.
 
@@ -108,7 +108,10 @@ def update_ins_action(request, user_id, ins_id):
 
 def list_pack(request, user_id):
     active_user = User.objects.get(pk=user_id)
-    pack = Package.objects.filter(sport_center_id_id=active_user.sport_center_id_id)
+    if (active_user.role == 'Manager'):
+        pack = Package.objects.filter(sport_center_id_id=active_user.sport_center_id_id)
+    else:
+        pack = Package.objects.all()
     pack_service = PackageService.objects.select_related('service_id')
     return render(request, 'sportcenter/list_pack.html',
                   {'pack': pack, 'active_user': active_user, 'pack_service': pack_service})
@@ -165,3 +168,19 @@ def update_pack_action(request, user_id, pack_id):
 
     updated_pack.save()
     return list_ins(request, user_id)
+
+
+def buy_pack(request, user_id, pack_id):
+    selected_pack = Package.objects.get(pk=pack_id)
+    active_user = User.objects.get(pk=user_id)
+    new_customer_pack = CustomerPackage(selected_pack,active_user)
+    new_customer_pack.save()
+    # pack = CustomerPackage.objects.filter(customer_id_id=active_user).select_related('package_id_id')
+    return redirect('list_pack')
+
+
+def my_packs(request, user_id):
+    active_user = User.objects.get(pk=user_id)
+    pack = CustomerPackage.objects.filter(customer_id_id=active_user)
+    return render(request, 'sportcenter/my_packs.html',
+                  {'pack': pack, 'active_user': active_user})

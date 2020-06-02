@@ -68,6 +68,22 @@
                             </a>
                         </li>
                     {% endif %}
+                    {% if active_user.role == 'Customer' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'list_pack' user_id=active_user.id %}">
+                                <i class="ni ni-single-02 text-yellow"></i>
+                                <span class="nav-link-text">All Packages</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                {% if active_user.role == 'Customer' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'my_packs' user_id=active_user.id %}">
+                                <i class="ni ni-single-02 text-yellow"></i>
+                                <span class="nav-link-text">My Packages</span>
+                            </a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="login.html">
                             <i class="ni ni-key-25 text-info"></i>

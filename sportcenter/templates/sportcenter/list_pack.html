@@ -2,6 +2,7 @@
 
 {% block container %}
     <body>
+    {% if active_user.role == 'Manager' %}
     <form action="{% url 'add_pack' user_id=active_user.id %}"
           method="post"> {% csrf_token %}
 
@@ -11,6 +12,7 @@
         </button>
 
     </form>
+    {% endif %}
 
     <table class="table">
         <thead>
@@ -39,7 +41,7 @@
                     </td>
                     <td class="td-actions ">
                         <div class="row">
-
+                            {% if active_user.role == 'Manager' %}
                             <form action="{% url 'update_pack' user_id=active_user.id pack_id=p.id %}"> {% csrf_token %}
                                 <button type="submit" rel="tooltip" class="btn btn-success btn-icon btn-sm "
                                         data-original-title="" title="">
@@ -54,6 +56,15 @@
                                 </button>
 
                             </form>
+                            {% endif %}
+
+                        {% if active_user.role == 'Customer' %}
+                            <form action="{% url 'buy_pack' user_id=active_user.id pack_id=p.id %}"> {% csrf_token %}
+                                <button type="button" class="btn btn-primary">Buy</button>
+                                </button>
+                            </form>
+                            {% endif %}
+
 
 
                         </div>

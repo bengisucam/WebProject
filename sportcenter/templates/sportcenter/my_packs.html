@@ -1,0 +1,37 @@
+{% extends 'accounts/base_login.html' %}
+
+{% block container %}
+    <body>
+
+    <table class="table">
+        <thead>
+        <tr>
+
+            <th style="font-size: 15px;color: #9d03ad">Package Name</th>
+            <th style="font-size: 15px;color: #9d03ad">Duration (days)</th>
+            <th style="font-size: 15px;color: #9d03ad">Price</th>
+            <th style="font-size: 15px;color: #9d03ad">Services</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <div class="pack">
+            {% for p in pack %}
+                <tr>
+                    <td>{{ p.package_name }}</td>
+                    <td>{{ p.duration }}</td>
+                    <td>{{ p.price }}</td>
+
+                    <td class="td-actions ">
+                        <div class="row">
+
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </div>
+        </tbody>
+    </table>
+    </body>
+{% endblock container %}

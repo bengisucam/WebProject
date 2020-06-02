@@ -21,5 +21,7 @@ urlpatterns = [
     path('<int:user_id>/pack/create/', views.create_pack, name='create_pack'),
     path('<int:user_id>/pack/delete/<int:pack_id>/', views.delete_pack, name='delete_pack'),
     path('<int:user_id>/pack/update/<int:pack_id>/', views.update_pack, name='update_pack'),
+    path('<int:user_id>/pack/buy/<int:pack_id>/', views.buy_pack, name='buy_pack'),
+    path('<int:user_id>/pack/myPacks/', views.my_packs, name='my_packs'),
     path('<int:user_id>/pack/update/action/<int:pack_id>/', views.update_pack_action, name='update_pack_action')
 ]
