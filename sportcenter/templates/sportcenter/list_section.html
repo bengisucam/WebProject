@@ -1,0 +1,65 @@
+{% extends 'accounts/base_login.html' %}
+
+{% block container %}
+    <body>
+    <form action="{% url 'add_section' user_id=active_user.id %}"
+          method="post"> {% csrf_token %}
+
+        <button type="submit" class="btn btn-primary float-right"
+                style="margin-top: 10px">
+            ADD SECTION
+        </button>
+
+    </form>
+
+    <table class="table">
+        <thead>
+        <tr>
+
+            <th style="font-size: 15px;color: #9d03ad">Section Name</th>
+            <th style="font-size: 15px;color: #9d03ad">Time</th>
+            <th style="font-size: 15px;color: #9d03ad">Service</th>
+            <th style="font-size: 15px;color: #9d03ad">Instructor</th>
+            <th style="font-size: 15px;color: #9d03ad">Room</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <div class="pack">
+            {% for s in section %}
+                <tr>
+                    <td>{{ s.section_name }}</td>
+                    <td>{{ s.start_time }}  {{ s.end_time }}</td>
+                    <td>{{ s.service_id.service_name }}</td>
+                    <td>{{ s.instructor_id.first_name }} {{ s.instructor_id.last_name }}</td>
+                    <td>{{ s.room_id.room_name }} </td>
+
+                    <td class="td-actions ">
+                        <div class="row">
+
+                            <form > {% csrf_token %}
+                                <button type="submit" rel="tooltip" class="btn btn-success btn-icon btn-sm "
+                                        data-original-title="" title="">
+                                    <i class="ni ni-settings-gear-65 pt-1"></i>
+                                </button>
+                            </form>
+                            <form action="{% url 'delete_section' user_id=active_user.id section_id=s.id %}" method="post" > {% csrf_token %}
+
+                                <button type="submit" rel="tooltip" class="btn btn-danger btn-icon btn-sm "
+                                        data-original-title="" title="">
+                                    <i class="ni ni-fat-remove pt-1"></i>
+                                </button>
+
+                            </form>
+
+
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </div>
+        </tbody>
+    </table>
+    </body>
+{% endblock container %}

@@ -16,7 +16,8 @@ def list_news(request, user_id):
 
 def add_news(request, user_id):
     active_user = User.objects.get(pk=user_id)
-    return render(request, 'news/add_new.html', {'active_user': active_user})
+    instructor = User.objects.filter(sport_center_id_id=active_user.id, role='Instructor')
+    return render(request, 'news/add_new.html', {'active_user': active_user, 'instructor': instructor})
 
 
 def create_news(request, user_id):

@@ -21,5 +21,9 @@ urlpatterns = [
     path('<int:user_id>/pack/create/', views.create_pack, name='create_pack'),
     path('<int:user_id>/pack/delete/<int:pack_id>/', views.delete_pack, name='delete_pack'),
     path('<int:user_id>/pack/update/<int:pack_id>/', views.update_pack, name='update_pack'),
-    path('<int:user_id>/pack/update/action/<int:pack_id>/', views.update_pack_action, name='update_pack_action')
+    path('<int:user_id>/pack/update/action/<int:pack_id>/', views.update_pack_action, name='update_pack_action'),
+    path('<int:user_id>/section/', views.list_section, name='list_section'),
+    path('<int:user_id>/section/add/', views.add_section, name='add_section'),
+    path('<int:user_id>/section/create/', views.create_section, name='create_section'),
+    path('<int:user_id>/section/delete/<int:section_id>/', views.delete_section, name='delete_section')
 ]

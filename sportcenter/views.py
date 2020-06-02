@@ -1,9 +1,8 @@
 import sys
 
-from django.db.models import Count
 from django.shortcuts import render
 from accounts.models import User
-from sportcenter.models import Room, Package, Service, PackageService
+from sportcenter.models import Room, Package, Service, PackageService, Section
 
 # Create your views here.
 
@@ -147,10 +146,11 @@ def update_pack(request, user_id, pack_id):
     updated_pack = Package.objects.get(pk=pack_id)
     active_user = User.objects.get(pk=user_id)
     services = Service.objects.all()
-    select = PackageService.objects.filter(package_id_id=pack_id).select_related('service_id_id')
+    select = PackageService.objects.filter(package_id_id=pack_id)
 
     return render(request, 'sportcenter/update_pack.html',
-                  {'active_user': active_user, 'update_pack': updated_pack, 'services': services, 'select': select})
+                  {'active_user': active_user, 'update_pack': updated_pack, 'services': services,
+                   'select_list': select})
 
 
 def update_pack_action(request, user_id, pack_id):
@@ -158,10 +158,51 @@ def update_pack_action(request, user_id, pack_id):
     updated_pack.package_name = request.POST.get("pack_name")
     updated_pack.duration = request.POST.get("pack_duration")
     updated_pack.price = request.POST.get("pack_price")
+    updated_pack.save()
+    select = PackageService.objects.filter(package_id_id=pack_id)
+    select.delete()
     for i in range(1, len(Service.objects.all()) + 1):
         if request.POST.get("check" + str(i)):
-            new_package_service = PackageService.objects.filter(package_id_id=pack_id)
+            new_package_service = PackageService(package_id_id=updated_pack.id, service_id_id=i)
             new_package_service.save()
 
-    updated_pack.save()
-    return list_ins(request, user_id)
+    return list_pack(request, user_id)
+
+
+'''         SECTION          '''
+
+
+def list_section(request, user_id):
+    active_user = User.objects.get(pk=user_id)
+    section = Section.objects.select_related('instructor_id', 'room_id', 'service_id').filter(
+        room_id__sport_center_id=active_user.sport_center_id_id)
+    return render(request, 'sportcenter/list_section.html', {'section': section, 'active_user': active_user})
+
+
+def add_section(request, user_id):
+    active_user = User.objects.get(pk=user_id)
+    instructor = User.objects.filter(sport_center_id_id=active_user.sport_center_id_id, role='Instructor')
+    room = Room.objects.filter(sport_center_id_id=active_user.sport_center_id_id)
+    service = Service.objects.all()
+    return render(request, 'sportcenter/add_section.html',
+                  {'active_user': active_user, 'instructor': instructor, 'room': room, 'service': service})
+
+
+def create_section(request, user_id):
+    section_name = request.POST.get("section_name")
+    section_start = request.POST.get("section_start")
+    section_end = request.POST.get("section_end")
+    section_ins_id = request.POST.get("section_ins")
+    section_room_id = request.POST.get("section_room")
+    section_service_id = request.POST.get("section_service")
+    new_section = Section(section_name=section_name, start_time=section_start, end_time=section_end,
+                          instructor_id_id=section_ins_id, room_id_id=section_room_id, service_id_id=section_service_id)
+
+    new_section.save()
+    return list_section(request, user_id)
+
+
+def delete_section(request, user_id, section_id):
+    deleted_section = Section.objects.get(pk=section_id)
+    deleted_section.delete()
+    return list_section(request, user_id)
