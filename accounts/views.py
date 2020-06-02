@@ -1,11 +1,9 @@
-
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from .forms import SignupForm
 from .models import User
-
 
 
 def signupPage(request):
@@ -50,6 +48,5 @@ def loginPage(request):
 
 
 def home(request, user_id):
-    # user_id = 3
     active_user = User.objects.get(pk=user_id)
     return render(request, 'accounts/base_login.html', {'active_user': active_user})
