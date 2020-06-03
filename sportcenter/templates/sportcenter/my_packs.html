@@ -10,7 +10,8 @@
             <th style="font-size: 15px;color: #9d03ad">Package Name</th>
             <th style="font-size: 15px;color: #9d03ad">Duration (days)</th>
             <th style="font-size: 15px;color: #9d03ad">Price</th>
-            <th style="font-size: 15px;color: #9d03ad">Services</th>
+            <th style="font-size: 15px;color: #9d03ad">Service</th>
+            <th style="font-size: 15px;color: #9d03ad">Start Date</th>
 
         </tr>
         </thead>
@@ -21,6 +22,20 @@
                     <td>{{ p.package_name }}</td>
                     <td>{{ p.duration }}</td>
                     <td>{{ p.price }}</td>
+                    <td>
+                    {% for ps in pack_service %}
+                        {% if p.id == ps.package_id_id %}
+                            {{ ps.service_id.service_name }}
+                        {% endif %}
+                    {% endfor %}
+                    </td>
+                    <td>
+                    {% for cp in customer_pack %}
+                        {% if cp.customer_id_id == active_user.id %}
+                            {{ cp.begin_date.date }}
+                        {% endif %}
+                    {% endfor %}
+                    </td>
 
                     <td class="td-actions ">
                         <div class="row">

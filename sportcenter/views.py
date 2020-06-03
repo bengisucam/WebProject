@@ -171,16 +171,20 @@ def update_pack_action(request, user_id, pack_id):
 
 
 def buy_pack(request, user_id, pack_id):
-    selected_pack = Package.objects.get(pk=pack_id)
-    active_user = User.objects.get(pk=user_id)
-    new_customer_pack = CustomerPackage(selected_pack,active_user)
+    new_customer_pack = CustomerPackage(customer_id_id=user_id, package_id_id=pack_id)
     new_customer_pack.save()
-    # pack = CustomerPackage.objects.filter(customer_id_id=active_user).select_related('package_id_id')
-    return redirect('list_pack')
+    return list_pack(request, user_id)
 
 
 def my_packs(request, user_id):
     active_user = User.objects.get(pk=user_id)
-    pack = CustomerPackage.objects.filter(customer_id_id=active_user)
+    pack_ids = list(CustomerPackage.objects.filter(customer_id_id=user_id).select_related('package_id'))
+    customer_pack = CustomerPackage.objects.filter(customer_id_id=user_id)
+    pack = set()
+    for i in range(len(pack_ids)):
+        pid = pack_ids[i].package_id
+        pack.add(pid)
+    pack_service = PackageService.objects.select_related('service_id')
     return render(request, 'sportcenter/my_packs.html',
-                  {'pack': pack, 'active_user': active_user})
+                  {'pack': pack, 'active_user': active_user,'pack_service': pack_service, 'customer_pack': customer_pack})
+
