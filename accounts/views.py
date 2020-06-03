@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from .forms import SignupForm
 from .models import User
-
+from django.contrib.auth.hashers import check_password, make_password
 
 def signupPage(request):
     if request.method == 'POST':
@@ -13,7 +13,9 @@ def signupPage(request):
             email = signupForm.cleaned_data.get('email')
             user_list = User.objects.all()
             if not user_list.filter(email=email).exists():
-                signupForm.save()
+                signup = signupForm.save(commit=False)
+                signup.password = make_password(signupForm.cleaned_data.get('password'))
+                signup.save()
             else:
                 messages.error(request, 'User already exists!')
                 return redirect('signupForm')
@@ -31,7 +33,7 @@ def loginPage(request):
         password = request.POST.get('password')
         try:
             user = User.objects.get(email=email)
-            if user.password == password:
+            if check_password(password, user.password):
                 pk = user.pk
                 # return redirect('homeForm', pk=pk)
                 return HttpResponseRedirect(reverse('homeForm', args=(pk,)))
