@@ -5,6 +5,8 @@ from django.shortcuts import render, redirect
 from .forms import SignupForm
 from .models import User
 from django.contrib.auth.hashers import check_password, make_password
+from django.contrib.auth import logout
+
 
 def signupPage(request):
     if request.method == 'POST':
@@ -46,6 +48,12 @@ def loginPage(request):
     context = {}
     return render(request, 'accounts/login.html', context)
 
+
+
+
+def logoutPage(request, user_id):
+    logout(request)
+    return redirect('loginForm')
 
 
 

@@ -1,0 +1,46 @@
+{% extends 'accounts/base_login.html' %}
+
+{% block container %}
+    <body>
+
+    <table class="table">
+        <thead>
+        <tr>
+
+            <th style="font-size: 15px;color: #9d03ad">First Name</th>
+            <th style="font-size: 15px;color: #9d03ad">Last Name</th>
+            <th style="font-size: 15px;color: #9d03ad">Gender</th>
+            <th style="font-size: 15px;color: #9d03ad">Date of Birth</th>
+
+        </tr>
+
+        </thead>
+        <tbody>
+        <div class="pack">
+                <tr>
+                    <td>{{ active_user.first_name }}</td>
+                    <td>{{ active_user.last_name }}</td>
+                    <td>{{ active_user.gender }}</td>
+                    <td>{{ active_user.date_of_birth }}</td>
+
+
+                    <td class="td-actions ">
+                        <div class="row">
+
+                            <form action="{% url 'change_password' user_id=active_user.id %}" method="post"> {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Change Password</button>
+                            </form>
+
+
+                        </div>
+                    </td>
+                </tr>
+
+        </div>
+        </tbody>
+
+
+
+    </table>
+    </body>
+{% endblock container %}

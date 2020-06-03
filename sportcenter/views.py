@@ -4,6 +4,8 @@ from django.db.models import Count
 from django.shortcuts import render, redirect
 from accounts.models import User
 from sportcenter.models import Room, Package, Service, PackageService, CustomerPackage
+from django.contrib.auth.hashers import check_password, make_password
+from django.contrib import messages
 
 # Create your views here.
 
@@ -188,3 +190,33 @@ def my_packs(request, user_id):
     return render(request, 'sportcenter/my_packs.html',
                   {'pack': pack, 'active_user': active_user,'pack_service': pack_service, 'customer_pack': customer_pack})
 
+
+
+def show_profile(request, user_id):
+    active_user = User.objects.get(pk=user_id)
+    return render(request, 'sportcenter/profile.html',
+                  {'active_user': active_user})
+
+
+def change_password(request, user_id):
+    active_user = User.objects.get(pk=user_id)
+    return render(request, 'sportcenter/change_password.html',
+                  {'active_user': active_user})
+
+
+def save_changed_password(request, user_id):
+    active_user = User.objects.get(pk=user_id)
+    password = request.POST.get('old_password')
+    if check_password(password, active_user.password):
+        new_password = request.POST.get('new_password')
+        new_password_again = request.POST.get('new_password_again')
+        if new_password == new_password_again:
+            active_user.password = make_password(new_password)
+            active_user.save()
+        else:
+            messages.error(request, 'New passwords do not match!')
+    else:
+        messages.error(request, 'Password is not correct!')
+
+    return render(request, 'sportcenter/profile.html',
+                  {'active_user': active_user})

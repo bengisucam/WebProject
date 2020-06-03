@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from accounts.views import logoutPage
 
 # seperate each app url individual files, dont overwhelm the WebProject/urls.py !
 
@@ -23,5 +24,10 @@ urlpatterns = [
     path('<int:user_id>/pack/update/<int:pack_id>/', views.update_pack, name='update_pack'),
     path('<int:user_id>/pack/buy/<int:pack_id>/', views.buy_pack, name='buy_pack'),
     path('<int:user_id>/pack/myPacks/', views.my_packs, name='my_packs'),
-    path('<int:user_id>/pack/update/action/<int:pack_id>/', views.update_pack_action, name='update_pack_action')
+    path('<int:user_id>/pack/update/action/<int:pack_id>/', views.update_pack_action, name='update_pack_action'),
+    path('<int:user_id>/profile/', views.show_profile, name='show_profile'),
+    path('<int:user_id>/profile/changePassword/', views.change_password, name='change_password'),
+    path('<int:user_id>/profile/changePassword/save', views.save_changed_password, name='save_changed_password'),
+    path('<int:user_id>/logout/', logoutPage, name='logout'),
+
 ]
