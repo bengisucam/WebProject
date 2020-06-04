@@ -27,8 +27,9 @@ def create_room(request, user_id):
     active_user = User.objects.get(pk=user_id)
     room_name = request.POST.get("room_name")
     room_capacity = request.POST.get("room_capacity")
-    if len(room_name)>0 and len(room_capacity)>0:
-        new_room = Room(room_name=room_name, room_capacity=room_capacity, sport_center_id_id=active_user.sport_center_id_id)
+    if len(room_name) > 0 and len(room_capacity) > 0:
+        new_room = Room(room_name=room_name, room_capacity=room_capacity,
+                        sport_center_id_id=active_user.sport_center_id_id)
         new_room.save()
     else:
         messages.error(request, 'Please fill all the blanks!')
@@ -81,7 +82,8 @@ def create_ins(request, user_id):
     ins_email = request.POST.get("ins_email")
     ins_password = request.POST.get("ins_password")
     hashed_password = make_password(ins_password)
-    if len(ins_first_name)>0 and len(ins_last_name)>0 and len(ins_date)>0 and len(ins_email)>0 and len(ins_password):
+    if len(ins_first_name) > 0 and len(ins_last_name) > 0 and len(ins_date) > 0 and len(ins_email) > 0 and len(
+            ins_password):
         new_ins = User(first_name=ins_first_name, last_name=ins_last_name, date_of_birth=ins_date, gender=ins_gender,
                        email=ins_email, password=hashed_password, role='Instructor',
                        sport_center_id_id=active_user.sport_center_id_id)
@@ -141,10 +143,9 @@ def create_pack(request, user_id):
     pack_name = request.POST.get("pack_name")
     pack_duration = request.POST.get("pack_duration")
     pack_price = request.POST.get("pack_price")
-    if len(pack_name)>0 and len(pack_duration) and len(pack_price)>0:
+    if len(pack_name) > 0 and len(pack_duration) > 0 and len(pack_price) > 0:
         new_package = Package(package_name=pack_name, duration=pack_duration, price=pack_price,
                               sport_center_id_id=active_user.sport_center_id_id)
-
 
         for i in range(1, len(Service.objects.all()) + 1):
             if request.POST.get("check" + str(i)):
@@ -181,7 +182,6 @@ def update_pack(request, user_id, pack_id):
                    'select_list': select})
 
 
-
 def update_pack_action(request, user_id, pack_id):
     updated_pack = Package.objects.get(pk=pack_id)
     updated_pack.package_name = request.POST.get("pack_name")
@@ -196,7 +196,6 @@ def update_pack_action(request, user_id, pack_id):
             new_package_service.save()
 
     return list_pack(request, user_id)
-
 
 
 def buy_pack(request, user_id, pack_id):
@@ -219,9 +218,7 @@ def my_packs(request, user_id):
                    'customer_pack': customer_pack})
 
 
-
 '''         SECTION          '''
-
 
 
 def list_section(request, user_id):
@@ -249,8 +246,8 @@ def create_section(request, user_id):
     section_ins_id = request.POST.get("section_ins")
     section_room_id = request.POST.get("section_room")
     section_service_id = request.POST.get("section_service")
-    if( len(section_name)>0 and len(section_start)>0 and len(section_end)>0 and len(section_day)>0
-        and len(section_ins_id)>0 and len(section_room_id)>0 and len(section_service_id)>0):
+    if (len(section_name) > 0 and len(section_start) > 0 and len(section_end) > 0 and len(section_day) > 0
+            and len(section_ins_id) > 0 and len(section_room_id) > 0 and len(section_service_id) > 0):
         new_section = Section(section_name=section_name, start_time=section_start, end_time=section_end,
                               section_day=section_day, instructor_id_id=section_ins_id, room_id_id=section_room_id,
                               service_id_id=section_service_id)
@@ -292,6 +289,7 @@ def update_section_action(request, user_id, section_id):
     updated_section.save()
     return list_section(request, user_id)
 
+
 '''         MEMBER          '''
 
 
@@ -311,10 +309,6 @@ def list_schedule(request, user_id):
     section_ins = Section.objects.select_related('instructor_id').filter(instructor_id_id=active_user.id)
     return render(request, 'sportcenter/list_schedule.html',
                   {'active_user': active_user, 'section_ins': section_ins})
-
-
-
-
 
 
 '''         USER          '''
