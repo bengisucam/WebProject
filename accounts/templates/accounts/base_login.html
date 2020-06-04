@@ -41,6 +41,14 @@
                             </a>
                         </li>
                     {% endif %}
+                    {% if active_user.role.lower == 'manager' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'list_myrooms' user_id=active_user.id %}">
+                                <i class="ni ni-pin-3 text-primary"></i>
+                                <span class="nav-link-text">My Rooms</span>
+                            </a>
+                        </li>
+                    {% endif %}
                     {% if active_user.role == 'Manager' %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'list_section' user_id=active_user.id %}">
@@ -81,7 +89,7 @@
                             </a>
                         </li>
                     {% endif %}
-                {% if active_user.role == 'Customer' %}
+                    {% if active_user.role == 'Customer' %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'my_packs' user_id=active_user.id %}">
                                 <i class="ni ni-single-02 text-yellow"></i>
@@ -96,7 +104,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"  href="{% url 'logout' user_id=active_user.id %}" method="post" >
+                        <a class="nav-link" href="{% url 'logout' user_id=active_user.id %}" method="post">
                             <i class="ni ni-send text-dark"></i>
                             <span class="nav-link-text">Logout</span>
                         </a>
@@ -120,7 +128,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-search"></i></span>
                             </div>
-                            <input class="form-control" placeholder="Search" type="text" >
+                            <input class="form-control" placeholder="Search" type="text">
                         </div>
                     </div>
                     <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main"
