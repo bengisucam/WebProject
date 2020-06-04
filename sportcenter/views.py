@@ -139,6 +139,7 @@ def add_pack(request, user_id):
 
 
 def create_pack(request, user_id):
+    control = True
     active_user = User.objects.get(pk=user_id)
     pack_name = request.POST.get("pack_name")
     pack_duration = request.POST.get("pack_duration")
@@ -149,9 +150,15 @@ def create_pack(request, user_id):
 
         for i in range(1, len(Service.objects.all()) + 1):
             if request.POST.get("check" + str(i)):
+                control = False
                 new_package.save()
                 new_package_service = PackageService(package_id_id=new_package.id, service_id_id=i)
                 new_package_service.save()
+
+        if control:
+            messages.error(request, 'Please select any service! Go to My Packages section and try again!')
+            return render(request, 'sportcenter/list_pack.html',
+                          {'active_user': active_user})
 
     else:
         messages.error(request, 'Please fill all the blanks! Go to My Packages section and try again!')
@@ -179,17 +186,34 @@ def update_pack(request, user_id, pack_id):
 
 
 def update_pack_action(request, user_id, pack_id):
+    control = True
+    active_user = User.objects.get(pk=user_id)
     updated_pack = Package.objects.get(pk=pack_id)
     updated_pack.package_name = request.POST.get("pack_name")
     updated_pack.duration = request.POST.get("pack_duration")
     updated_pack.price = request.POST.get("pack_price")
-    updated_pack.save()
-    select = PackageService.objects.filter(package_id_id=pack_id)
-    select.delete()
-    for i in range(1, len(Service.objects.all()) + 1):
-        if request.POST.get("check" + str(i)):
-            new_package_service = PackageService(package_id_id=updated_pack.id, service_id_id=i)
-            new_package_service.save()
+    if len(updated_pack.package_name) > 0 and len(updated_pack.duration) > 0 and len(updated_pack.price) > 0:
+
+        for i in range(1, len(Service.objects.all()) + 1):
+            if request.POST.get("check" + str(i)):
+                if control:
+                    updated_pack.save()
+                    select = PackageService.objects.filter(package_id_id=pack_id)
+                    select.delete()
+                control = False
+                new_package_service = PackageService(package_id_id=updated_pack.id, service_id_id=i)
+                new_package_service.save()
+
+        if control:
+            messages.error(request, 'Please select any service! Go to My Packages section and try again!')
+            return render(request, 'sportcenter/list_pack.html',
+                          {'active_user': active_user})
+
+
+    else:
+        messages.error(request, 'Please fill all the blanks! Go to My Packages section and try again!')
+        return render(request, 'sportcenter/list_pack.html',
+                      {'active_user': active_user})
 
     return list_pack(request, user_id)
 
