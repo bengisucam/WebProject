@@ -1,0 +1,39 @@
+{% extends 'accounts/base_login.html' %}
+
+{% block container %}
+    <body>
+
+
+    <table class="table">
+        <thead>
+        <tr>
+
+            <th style="font-size: 15px;color: #9d03ad">Room </th>
+            <th style="font-size: 15px;color: #9d03ad">Day</th>
+            <th style="font-size: 15px;color: #9d03ad">Start-Finish</th>
+            <th style="font-size: 15px;color: #9d03ad">Service</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <div class="members">
+            {% for sec in section_ins %}
+                <tr>
+                    <td>{{ sec.room_id.room_name }}</td>
+
+                    <td>{{ sec.section_day}}</td>
+                    <td>{{ sec.start_time }}        {{ sec.end_time }}</td>
+                    <td>{{ sec.service_id.service_name }}</td>
+                    <td class="td-actions ">
+                        <div class="row">
+
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </div>
+        </tbody>
+    </table>
+    </body>
+{% endblock container %}

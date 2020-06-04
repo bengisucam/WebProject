@@ -40,3 +40,17 @@ def details_new(request, user_id, news_id):
     news = News.objects.get(pk=news_id)
     active_user = User.objects.get(pk=user_id)
     return render(request, 'news/details_new.html', {'active_user': active_user, 'detail_new': news})
+
+
+def update_new(request, user_id, news_id):
+    updated_new = News.objects.get(pk=news_id)
+    active_user = User.objects.get(pk=user_id)
+    return render(request, 'news/update_new.html', {'active_user': active_user, 'update_new': updated_new})
+
+
+def update_new_action(request, user_id, news_id):
+    updated_new = News.objects.get(pk=news_id)
+    updated_new.title = request.POST.get("title")
+    updated_new.description = request.POST.get("desc")
+    updated_new.save()
+    return list_news(request, user_id)

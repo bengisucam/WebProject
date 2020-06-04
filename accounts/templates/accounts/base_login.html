@@ -71,6 +71,22 @@
                             </a>
                         </li>
                     {% endif %}
+                    {% if active_user.role == 'Manager' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'list_member' user_id=active_user.id %}">
+                                <i class="ni ni-circle-08 text-pink"></i>
+                                <span class="nav-link-text">My Members</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                {% if active_user.role == 'Instructor' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'list_schedule' user_id=active_user.id %}">
+                                <i class="ni ni-calendar-grid-58"></i>
+                                <span class="nav-link-text">My Schedule</span>
+                            </a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="login.html">
                             <i class="ni ni-key-25 text-info"></i>
@@ -78,12 +94,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="register.html">
-                            <i class="ni ni-circle-08 text-pink"></i>
-                            <span class="nav-link-text">Help</span>
-                        </a>
-                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link">
                             <i class="ni ni-send text-dark"></i>

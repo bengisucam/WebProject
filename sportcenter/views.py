@@ -2,7 +2,7 @@ import sys
 
 from django.shortcuts import render
 from accounts.models import User
-from sportcenter.models import Room, Package, Service, PackageService, Section
+from sportcenter.models import Room, Package, Service, PackageService, Section, CustomerPackage
 
 # Create your views here.
 
@@ -192,11 +192,13 @@ def create_section(request, user_id):
     section_name = request.POST.get("section_name")
     section_start = request.POST.get("section_start")
     section_end = request.POST.get("section_end")
+    section_day = request.POST.get("section_day")
     section_ins_id = request.POST.get("section_ins")
     section_room_id = request.POST.get("section_room")
     section_service_id = request.POST.get("section_service")
     new_section = Section(section_name=section_name, start_time=section_start, end_time=section_end,
-                          instructor_id_id=section_ins_id, room_id_id=section_room_id, service_id_id=section_service_id)
+                          section_day=section_day, instructor_id_id=section_ins_id, room_id_id=section_room_id,
+                          service_id_id=section_service_id)
 
     new_section.save()
     return list_section(request, user_id)
@@ -206,3 +208,48 @@ def delete_section(request, user_id, section_id):
     deleted_section = Section.objects.get(pk=section_id)
     deleted_section.delete()
     return list_section(request, user_id)
+
+
+def update_section(request, user_id, section_id):
+    active_user = User.objects.get(pk=user_id)
+    instructor = User.objects.filter(sport_center_id_id=active_user.sport_center_id_id, role='Instructor')
+    room = Room.objects.filter(sport_center_id_id=active_user.sport_center_id_id)
+    service = Service.objects.all()
+    updated_section = Section.objects.get(pk=section_id)
+
+    return render(request, 'sportcenter/update_section.html',
+                  {'active_user': active_user, 'update_section': updated_section, 'instructor': instructor,
+                   'room': room, 'service': service})
+
+
+def update_section_action(request, user_id, section_id):
+    updated_section = Section.objects.get(pk=section_id)
+    updated_section.section_name = request.POST.get("section_name")
+    # updated_section.start_time = request.POST.get("section_start")
+    # updated_section.end_time = request.POST.get("section_end")
+    updated_section.instructor_id_id = request.POST.get("section_ins")
+    updated_section.room_id_id = request.POST.get("section_room")
+    updated_section.service_id_id = request.POST.get("section_service")
+    updated_section.save()
+    return list_section(request, user_id)
+
+
+'''         MEMBER          '''
+
+
+def list_member(request, user_id):
+    active_user = User.objects.get(pk=user_id)
+    member_package = CustomerPackage.objects.prefetch_related('customer_id', 'package_id').filter(
+        package_id__sport_center_id=active_user.sport_center_id_id).order_by('-begin_date')
+    return render(request, 'sportcenter/list_member.html',
+                  {'active_user': active_user, 'member_package': member_package})
+
+
+'''         INSTRUCTOR SCHEDUL          '''
+
+
+def list_schedule(request, user_id):
+    active_user = User.objects.get(pk=user_id)
+    section_ins = Section.objects.select_related('instructor_id').filter(instructor_id_id=active_user.id)
+    return render(request, 'sportcenter/list_schedule.html',
+                  {'active_user': active_user, 'section_ins': section_ins})

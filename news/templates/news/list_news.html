@@ -2,8 +2,8 @@
 {% block container %}
     <body>
     {% if active_user.role.lower == 'instructor' %}
-    <form action="{% url 'add_news' user_id=active_user.id %}"
-                                  method="post"> {% csrf_token %}
+        <form action="{% url 'add_news' user_id=active_user.id %}"
+              method="post"> {% csrf_token %}
 
         <button type="submit" class="btn btn-primary float-right"
                 style="margin-top: 10px">
@@ -46,20 +46,24 @@
 
                             </form>
                             {% if active_user.role.lower == 'instructor' %}
-                            <form> {% csrf_token %}
-                                <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm "
-                                        data-original-title="" title="">
-                                    <i class="ni ni-settings-gear-65 pt-1"></i>
-                                </button>
-                            </form>
-                            <form action="{% url 'delete_news' user_id=active_user.id news_id=n.id %}" method="post"> {% csrf_token %}
+                                {% if n.instructor_id.id == active_user.id %}
+                                    <form action="{% url 'update_news' user_id=active_user.id  news_id=n.id %}"
+                                          method="post"> {% csrf_token %}
+                                        <button type="submit" rel="tooltip" class="btn btn-success btn-icon btn-sm "
+                                                data-original-title="" title="">
+                                            <i class="ni ni-settings-gear-65 pt-1"></i>
+                                        </button>
+                                    </form>
+                                    <form action="{% url 'delete_news' user_id=active_user.id news_id=n.id %}"
+                                          method="post"> {% csrf_token %}
 
-                                <button type="submit" rel="tooltip" class="btn btn-danger btn-icon btn-sm "
-                                        data-original-title="" title="">
-                                    <i class="ni ni-fat-remove pt-1"></i>
-                                </button>
+                                        <button type="submit" rel="tooltip" class="btn btn-danger btn-icon btn-sm "
+                                                data-original-title="" title="">
+                                            <i class="ni ni-fat-remove pt-1"></i>
+                                        </button>
 
-                            </form>
+                                    </form>
+                                {% endif %}
                             {% endif %}
                         </div>
                     </td>

@@ -25,5 +25,10 @@ urlpatterns = [
     path('<int:user_id>/section/', views.list_section, name='list_section'),
     path('<int:user_id>/section/add/', views.add_section, name='add_section'),
     path('<int:user_id>/section/create/', views.create_section, name='create_section'),
-    path('<int:user_id>/section/delete/<int:section_id>/', views.delete_section, name='delete_section')
+    path('<int:user_id>/section/delete/<int:section_id>/', views.delete_section, name='delete_section'),
+    path('<int:user_id>/section/update/<int:section_id>/', views.update_section, name='update_section'),
+    path('<int:user_id>/section/update/action/<int:section_id>/', views.update_section_action,
+         name='update_section_action'),
+    path('<int:user_id>/member/', views.list_member, name='list_member'),
+    path('<int:user_id>/schedule/', views.list_schedule, name='list_schedule')
 ]

@@ -17,6 +17,7 @@
         <tr>
 
             <th style="font-size: 15px;color: #9d03ad">Section Name</th>
+            <th style="font-size: 15px;color: #9d03ad">Day</th>
             <th style="font-size: 15px;color: #9d03ad">Time</th>
             <th style="font-size: 15px;color: #9d03ad">Service</th>
             <th style="font-size: 15px;color: #9d03ad">Instructor</th>
@@ -29,6 +30,7 @@
             {% for s in section %}
                 <tr>
                     <td>{{ s.section_name }}</td>
+                    <td>{{ s.section_day }}</td>
                     <td>{{ s.start_time }}  {{ s.end_time }}</td>
                     <td>{{ s.service_id.service_name }}</td>
                     <td>{{ s.instructor_id.first_name }} {{ s.instructor_id.last_name }}</td>
@@ -37,7 +39,7 @@
                     <td class="td-actions ">
                         <div class="row">
 
-                            <form > {% csrf_token %}
+                            <form action="{% url 'update_section' user_id=active_user.id section_id=s.id %}" method="post"> {% csrf_token %}
                                 <button type="submit" rel="tooltip" class="btn btn-success btn-icon btn-sm "
                                         data-original-title="" title="">
                                     <i class="ni ni-settings-gear-65 pt-1"></i>
