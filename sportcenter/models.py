@@ -37,6 +37,7 @@ class Service(models.Model):
 
 class Section(models.Model):
     section_name = models.CharField(max_length=100, blank=False)
+    section_day = models.CharField(max_length=20, blank=False)
     start_time = models.TimeField(auto_now=False)
     end_time = models.TimeField(auto_now=False)
     service_id = models.ForeignKey(Service, on_delete=models.CASCADE)
