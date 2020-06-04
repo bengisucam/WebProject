@@ -227,7 +227,7 @@ def my_packs(request, user_id):
 def list_section(request, user_id):
     active_user = User.objects.get(pk=user_id)
     section = Section.objects.select_related('instructor_id', 'room_id', 'service_id').filter(
-        room_id__sport_center_id=active_user.sport_center_id_id)
+        room_id__sport_center_id=active_user.sport_center_id_id).order_by('id')
     return render(request, 'sportcenter/list_section.html', {'section': section, 'active_user': active_user})
 
 
@@ -284,8 +284,8 @@ def update_section(request, user_id, section_id):
 def update_section_action(request, user_id, section_id):
     updated_section = Section.objects.get(pk=section_id)
     updated_section.section_name = request.POST.get("section_name")
-    # updated_section.start_time = request.POST.get("section_start")
-    # updated_section.end_time = request.POST.get("section_end")
+    updated_section.start_time = request.POST.get("section_start")
+    updated_section.end_time = request.POST.get("section_end")
     updated_section.instructor_id_id = request.POST.get("section_ins")
     updated_section.room_id_id = request.POST.get("section_room")
     updated_section.service_id_id = request.POST.get("section_service")

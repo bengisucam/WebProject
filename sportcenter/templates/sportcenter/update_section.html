@@ -77,7 +77,7 @@
                     <div class="select2">
                         <label style="width: 160px" for="section_service">Choose a Service: </label>
                         <select style="width: 200px" name="section_service" id="section_service">
-                            <option value={{ update_section.service_id }}>{{ update_section.service_id.service_name }}</option>
+                            <option value={{ update_section.service_id.id }}>{{ update_section.service_id.service_name }}</option>
 
                             {% for s in service %}
                                 {% if  s.id  != update_section.service_id.id %}
