@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.contrib import messages
 from django.shortcuts import render
 from .models import News
 from accounts.models import User
@@ -23,9 +24,14 @@ def create_news(request, user_id):
     active_user = User.objects.get(pk=user_id)
     title = request.POST.get("title")
     desc = request.POST.get("desc")
-    new_news = News(title=title, date=datetime.now(), description=desc, likes=0, instructor_id=active_user)
-    new_news.save()
-    news_obj = News.objects.select_related('instructor_id').order_by('-date')
+    if len(title)>0 and len(desc)>0:
+        new_news = News(title=title, date=datetime.now(), description=desc, likes=0, instructor_id=active_user)
+        new_news.save()
+        news_obj = News.objects.select_related('instructor_id').order_by('-date')
+    else:
+        messages.error(request, 'Please fill all the blanks!')
+        return render(request, 'news/add_new.html',
+                              {'active_user': active_user})
     return render(request, 'news/list_news.html', {'active_user': active_user, 'news': news_obj})
 
 

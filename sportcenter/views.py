@@ -27,8 +27,14 @@ def create_room(request, user_id):
     active_user = User.objects.get(pk=user_id)
     room_name = request.POST.get("room_name")
     room_capacity = request.POST.get("room_capacity")
-    new_room = Room(room_name=room_name, room_capacity=room_capacity, sport_center_id_id=active_user.sport_center_id_id)
-    new_room.save()
+    if len(room_name)>0 and len(room_capacity)>0:
+        new_room = Room(room_name=room_name, room_capacity=room_capacity, sport_center_id_id=active_user.sport_center_id_id)
+        new_room.save()
+    else:
+        messages.error(request, 'Please fill all the blanks!')
+        return render(request, 'sportcenter/add_room.html',
+                      {'active_user': active_user})
+
     return list_myrooms(request, user_id)
 
 
@@ -74,8 +80,9 @@ def create_ins(request, user_id):
     ins_gender = request.POST.get("ins_gender")
     ins_email = request.POST.get("ins_email")
     ins_password = request.POST.get("ins_password")
+    hashed_password = make_password(ins_password)
     new_ins = User(first_name=ins_first_name, last_name=ins_last_name, date_of_birth=ins_date, gender=ins_gender,
-                   email=ins_email, password=ins_password, role='Instructor',
+                   email=ins_email, password=hashed_password, role='Instructor',
                    sport_center_id_id=active_user.sport_center_id_id)
     new_ins.save()
     return list_ins(request, user_id)
@@ -110,7 +117,7 @@ def update_ins_action(request, user_id, ins_id):
 
 def list_pack(request, user_id):
     active_user = User.objects.get(pk=user_id)
-    if (active_user.role == 'Manager'):
+    if active_user.role == 'Manager':
         pack = Package.objects.filter(sport_center_id_id=active_user.sport_center_id_id)
     else:
         pack = Package.objects.all()
@@ -130,14 +137,25 @@ def create_pack(request, user_id):
     pack_name = request.POST.get("pack_name")
     pack_duration = request.POST.get("pack_duration")
     pack_price = request.POST.get("pack_price")
-    new_package = Package(package_name=pack_name, duration=pack_duration, price=pack_price,
-                          sport_center_id_id=active_user.sport_center_id_id)
-    new_package.save()
+    if len(pack_name)>0 and len(pack_duration) and len(pack_price)>0:
+        new_package = Package(package_name=pack_name, duration=pack_duration, price=pack_price,
+                              sport_center_id_id=active_user.sport_center_id_id)
 
-    for i in range(1, len(Service.objects.all()) + 1):
-        if request.POST.get("check" + str(i)):
-            new_package_service = PackageService(package_id_id=new_package.id, service_id_id=i)
-            new_package_service.save()
+
+        for i in range(1, len(Service.objects.all()) + 1):
+            if request.POST.get("check" + str(i)):
+                new_package.save()
+                new_package_service = PackageService(package_id_id=new_package.id, service_id_id=i)
+                new_package_service.save()
+            else:
+                messages.error(request, 'Please check at least one service! Go to My Packages section and try again!')
+                return render(request, 'sportcenter/list_pack.html',
+                              {'active_user': active_user})
+
+    else:
+        messages.error(request, 'Please fill all the blanks! Go to My Package section and try again!')
+        return render(request, 'sportcenter/list_pack.html',
+                      {'active_user': active_user})
 
     return list_pack(request, user_id)
 
@@ -188,8 +206,8 @@ def my_packs(request, user_id):
         pack.add(pid)
     pack_service = PackageService.objects.select_related('service_id')
     return render(request, 'sportcenter/my_packs.html',
-                  {'pack': pack, 'active_user': active_user,'pack_service': pack_service, 'customer_pack': customer_pack})
-
+                  {'pack': pack, 'active_user': active_user, 'pack_service': pack_service,
+                   'customer_pack': customer_pack})
 
 
 def show_profile(request, user_id):
@@ -204,19 +222,28 @@ def change_password(request, user_id):
                   {'active_user': active_user})
 
 
-def save_changed_password(request, user_id):
+def change_password_action(request, user_id):
     active_user = User.objects.get(pk=user_id)
     password = request.POST.get('old_password')
-    if check_password(password, active_user.password):
+    if len(password) > 0 and check_password(password, active_user.password):
         new_password = request.POST.get('new_password')
         new_password_again = request.POST.get('new_password_again')
-        if new_password == new_password_again:
-            active_user.password = make_password(new_password)
-            active_user.save()
+        if len(new_password) > 0 and len(new_password_again) > 0:
+            if new_password == new_password_again:
+                active_user.password = make_password(new_password)
+                active_user.save()
+            else:
+                messages.error(request, 'New passwords do not match!')
+                return render(request, 'sportcenter/change_password.html',
+                              {'active_user': active_user})
         else:
-            messages.error(request, 'New passwords do not match!')
+            messages.error(request, 'Please fill the blanks!')
+            return render(request, 'sportcenter/change_password.html',
+                          {'active_user': active_user})
     else:
         messages.error(request, 'Password is not correct!')
+        return render(request, 'sportcenter/change_password.html',
+                      {'active_user': active_user})
 
     return render(request, 'sportcenter/profile.html',
                   {'active_user': active_user})

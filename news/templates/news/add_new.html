@@ -24,6 +24,11 @@
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Add New</button>
             </div>
+
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+
         </form>
     </div>
 {% endblock container %}

@@ -11,6 +11,9 @@
             ADD PACKAGE
         </button>
 
+                 {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
     </form>
     {% endif %}
 
@@ -67,6 +70,7 @@
                     </td>
                 </tr>
             {% endfor %}
+
 
         </div>
         </tbody>

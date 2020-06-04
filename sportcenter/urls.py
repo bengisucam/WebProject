@@ -27,7 +27,7 @@ urlpatterns = [
     path('<int:user_id>/pack/update/action/<int:pack_id>/', views.update_pack_action, name='update_pack_action'),
     path('<int:user_id>/profile/', views.show_profile, name='show_profile'),
     path('<int:user_id>/profile/changePassword/', views.change_password, name='change_password'),
-    path('<int:user_id>/profile/changePassword/save', views.save_changed_password, name='save_changed_password'),
+    path('<int:user_id>/profile/changePassword/action', views.change_password_action, name='change_password_action'),
     path('<int:user_id>/logout/', logoutPage, name='logout'),
 
 ]
