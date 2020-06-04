@@ -1,0 +1,40 @@
+{% extends 'accounts/base_login.html' %}
+
+{% block container %}
+    <body>
+
+
+    <table class="table">
+        <thead>
+        <tr>
+
+            <th style="font-size: 15px;color: #9d03ad">Member </th>
+            <th style="font-size: 15px;color: #9d03ad">Package</th>
+            <th style="font-size: 15px;color: #9d03ad">Begin Date</th>
+            <th style="font-size: 15px;color: #9d03ad">Duration (Days)</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        <div class="members">
+            {% for m in member_package %}
+                <tr>
+                    <td>{{ m.customer_id.first_name }} {{ m.customer_id.last_name }} ({{ m.customer_id.email }})</td>
+
+                    <td>{{ m.package_id.package_name }}</td>
+                    <td>{{ m.begin_date }}</td>
+                    <td>{{ m.package_id.duration }}</td>
+                    <td class="td-actions ">
+                        <div class="row">
+
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </div>
+        </tbody>
+    </table>
+    </body>
+{% endblock container %}

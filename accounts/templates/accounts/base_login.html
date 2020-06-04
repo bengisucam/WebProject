@@ -38,33 +38,43 @@
                             <span class="nav-link-text">News</span>
                         </a>
                     </li>
-                    {% if active_user.role.lower == 'manager' %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'list_myrooms' user_id=active_user.id %}">
-                                <i class="ni ni-pin-3 text-primary"></i>
-                                <span class="nav-link-text">My Rooms</span>
-                            </a>
-                        </li>
-                    {% endif %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="map.html">
-                            <i class="ni ni-pin-3 text-primary"></i>
-                            <span class="nav-link-text">My Members</span>
-                        </a>
-                    </li>
-                    {% if active_user.role == 'Manager' %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'list_pack' user_id=active_user.id %}">
-                                <i class="ni ni-single-02 text-yellow"></i>
-                                <span class="nav-link-text">My Package</span>
-                            </a>
-                        </li>
-                    {% endif %}
                     {% if active_user.role == 'Manager' %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'list_ins' user_id=active_user.id %}">
-                                <i class="ni ni-bullet-list-67 text-default"></i>
+                                <i class="ni ni-single-02 text-yellow"></i>
                                 <span class="nav-link-text">My Instructors</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if active_user.role == 'Manager' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'list_section' user_id=active_user.id %}">
+                                <i class="ni ni-calendar-grid-58 "></i>
+                                <span class="nav-link-text">My Sections</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if active_user.role == 'Manager' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'list_pack' user_id=active_user.id %}">
+                                <i class="ni ni-app"></i>
+                                <span class="nav-link-text">My Packages</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if active_user.role == 'Manager' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'list_member' user_id=active_user.id %}">
+                                <i class="ni ni-circle-08 text-pink"></i>
+                                <span class="nav-link-text">My Members</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if active_user.role == 'Instructor' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'list_schedule' user_id=active_user.id %}">
+                                <i class="ni ni-calendar-grid-58"></i>
+                                <span class="nav-link-text">My Schedule</span>
                             </a>
                         </li>
                     {% endif %}
