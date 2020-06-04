@@ -47,8 +47,8 @@
                             </form>
                             {% if active_user.role.lower == 'instructor' %}
                                 {% if n.instructor_id.id == active_user.id %}
-                                    <form> {% csrf_token %}
-                                        <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm "
+                                    <form action="{% url 'update_news' user_id=active_user.id news_id=n.id %}"> {% csrf_token %}
+                                        <button type="submit" rel="tooltip" class="btn btn-success btn-icon btn-sm "
                                                 data-original-title="" title="">
                                             <i class="ni ni-settings-gear-65 pt-1"></i>
                                         </button>

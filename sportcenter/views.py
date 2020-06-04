@@ -152,10 +152,6 @@ def create_pack(request, user_id):
                 new_package.save()
                 new_package_service = PackageService(package_id_id=new_package.id, service_id_id=i)
                 new_package_service.save()
-            else:
-                messages.error(request, 'Please check at least one service! Go to My Packages section and try again!')
-                return render(request, 'sportcenter/list_pack.html',
-                              {'active_user': active_user})
 
     else:
         messages.error(request, 'Please fill all the blanks! Go to My Packages section and try again!')
