@@ -1,0 +1,83 @@
+{% extends 'accounts/base_login.html' %}
+
+{% block container %}
+    <div style="align-items: center" class="card-body">
+        <form action="{% url 'create_section' user_id=active_user.id %}" method="post"> {% csrf_token %}
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="form-control-label" for="section_name">Section Name</label>
+                        <input type="text" id="section_name" name="section_name" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="form-control-label" for="section_start">Start Time</label>
+                        <input type="time" id="section_start" name="section_start" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="form-control-label" for="section_end">End Time</label>
+                        <input type="time" id="section_end" name="section_end" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div style="alignment: center">
+                <div class="col-lg-6">
+                    <div class="select2">
+                        <label style="width: 160px" for="section_day">Choose a Day: </label>
+                        <select style="width: 200px" name="section_day" id="section_day">
+
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                            <option value="Sunday">Sunday</option>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="select2">
+                        <label style="width: 160px" for="section_ins">Choose a instructor: </label>
+                        <select style="width: 200px" name="section_ins" id="section_ins">
+                            {% for ins in instructor %}
+                                <option value={{ ins.id }}>{{ ins.first_name }} {{ ins.last_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="select2">
+                        <label style="width: 160px" for="section_room">Choose a Room: </label>
+                        <select style="width: 200px" name="section_room" id="section_room">
+                            {% for r in room %}
+                                <option value={{ r.id }}>{{ r.room_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="select2">
+                        <label style="width: 160px" for="section_service">Choose a Service: </label>
+                        <select style="width: 200px" name="section_service" id="section_service">
+                            {% for s in service %}
+                                <option value={{ s.id }}>{{ s.service_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Add Section</button>
+            </div>
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </form>
+    </div>
+{% endblock container %}

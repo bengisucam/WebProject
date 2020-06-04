@@ -81,10 +81,14 @@ def create_ins(request, user_id):
     ins_email = request.POST.get("ins_email")
     ins_password = request.POST.get("ins_password")
     hashed_password = make_password(ins_password)
-    new_ins = User(first_name=ins_first_name, last_name=ins_last_name, date_of_birth=ins_date, gender=ins_gender,
-                   email=ins_email, password=hashed_password, role='Instructor',
-                   sport_center_id_id=active_user.sport_center_id_id)
-    new_ins.save()
+    if len(ins_first_name)>0 and len(ins_last_name)>0 and len(ins_date)>0 and len(ins_email)>0 and len(ins_password):
+        new_ins = User(first_name=ins_first_name, last_name=ins_last_name, date_of_birth=ins_date, gender=ins_gender,
+                       email=ins_email, password=hashed_password, role='Instructor',
+                       sport_center_id_id=active_user.sport_center_id_id)
+        new_ins.save()
+    else:
+        messages.error(request, 'Please fill all the blanks to create an instructor!')
+        return render(request, 'sportcenter/add_ins.html', {'active_user': active_user})
     return list_ins(request, user_id)
 
 
@@ -153,7 +157,7 @@ def create_pack(request, user_id):
                               {'active_user': active_user})
 
     else:
-        messages.error(request, 'Please fill all the blanks! Go to My Package section and try again!')
+        messages.error(request, 'Please fill all the blanks! Go to My Packages section and try again!')
         return render(request, 'sportcenter/list_pack.html',
                       {'active_user': active_user})
 
@@ -237,6 +241,7 @@ def add_section(request, user_id):
 
 
 def create_section(request, user_id):
+    active_user = User.objects.get(pk=user_id)
     section_name = request.POST.get("section_name")
     section_start = request.POST.get("section_start")
     section_end = request.POST.get("section_end")
@@ -244,11 +249,17 @@ def create_section(request, user_id):
     section_ins_id = request.POST.get("section_ins")
     section_room_id = request.POST.get("section_room")
     section_service_id = request.POST.get("section_service")
-    new_section = Section(section_name=section_name, start_time=section_start, end_time=section_end,
-                          section_day=section_day, instructor_id_id=section_ins_id, room_id_id=section_room_id,
-                          service_id_id=section_service_id)
+    if( len(section_name)>0 and len(section_start)>0 and len(section_end)>0 and len(section_day)>0
+        and len(section_ins_id)>0 and len(section_room_id)>0 and len(section_service_id)>0):
+        new_section = Section(section_name=section_name, start_time=section_start, end_time=section_end,
+                              section_day=section_day, instructor_id_id=section_ins_id, room_id_id=section_room_id,
+                              service_id_id=section_service_id)
 
-    new_section.save()
+        new_section.save()
+    else:
+        messages.error(request, 'Please fill all the blanks to create a section!')
+        return render(request, 'sportcenter/add_section.html', {'active_user': active_user})
+
     return list_section(request, user_id)
 
 
